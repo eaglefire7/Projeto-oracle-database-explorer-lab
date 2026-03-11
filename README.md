@@ -1,57 +1,49 @@
-# Oracle Database Explorer: Administração de Infraestrutura 🛠️
+# Oracle Database Administration: Infrastructure & Lifecycle Lab 🛠️
 
-Este repositório contém a documentação técnica e os laboratórios práticos realizados durante o curso **Oracle Database Explorer**. O foco do projeto é demonstrar a proficiência na gestão de instâncias Oracle, desde a arquitetura fundamental até à configuração de conectividade e ambientes Multitenant.
-
----
-
-## 🏗️ 1. Arquitetura do Oracle Database
-Um dos pilares deste laboratório foi a compreensão da separação entre **Instância** e **Banco de Dados**:
-- **Instância (SGA + Background Processes):** Estruturas de memória e processos que gerem o acesso aos dados.
-- **Banco de Dados (Ficheiros Físicos):** Datafiles, Control Files e Redo Logs que armazenam a informação permanentemente.
+Este repositório documenta a implementação prática e os procedimentos de administração realizados durante o curso **Oracle Database Explorer**. O projeto foca nos pilares de sustentação de um ambiente Oracle, abrangendo desde a arquitetura física e lógica até o gerenciamento crítico da instância.
 
 ---
 
-## 🛠️ 2. Guia de Atividades Passo a Passo
+## 🏗️ Arquitetura do Oracle Database
+Este laboratório explorou a separação fundamental entre **Instância** e **Banco de Dados**:
+- **Instância (SGA + Background Processes):** Gerenciamento de memória e processos operacionais que controlam o acesso aos dados.
+- **Banco de Dados (Ficheiros Físicos):** Estrutura de armazenamento composta por Datafiles, Control Files e Redo Logs.
 
-### A. Provisionamento com DBCA (Database Configuration Assistant)
-O processo de criação do banco de dados foi realizado via interface gráfica (GUI) para garantir o cumprimento das melhores práticas da Oracle.
-1. **Configuração de Armazenamento:** Definição de locais para ficheiros de dados e logs.
-2. **Dimensionamento de Memória:** Configuração da SGA (System Global Area) e PGA (Program Global Area).
-3. **Multitenant Architecture:** Criação de um **Container Database (CDB)** e um **Pluggable Database (PDB)** para isolamento de dados.
+---
 
-### B. Ciclo de Vida da Instância (Startup & Shutdown)
-Domínio técnico dos estados de transição da base de dados, essencial para manutenção e resolução de problemas:
+## 🛠️ Procedimentos Técnicos Realizados
 
-| Estado | Comando SQL | Descrição Técnica |
+### 1. Provisionamento Estruturado (DBCA)
+Implementação de banco de dados utilizando o **Database Configuration Assistant**, seguindo as melhores práticas da Oracle:
+- **Arquitetura Multitenant:** Configuração de um **Container Database (CDB)** para consolidação de instâncias.
+- **Gerenciamento de Memória:** Definição e ajuste de áreas de memória SGA (System Global Area) e PGA (Program Global Area).
+- **Storage:** Organização de diretórios e arquivos de dados.
+
+### 2. Gerenciamento do Ciclo de Vida (Startup & Shutdown)
+Domínio dos estados de transição da instância para operações de manutenção e recuperação:
+
+| Estado | Comando | Descrição Técnica |
 | :--- | :--- | :--- |
-| **NOMOUNT** | `STARTUP NOMOUNT` | A instância é iniciada. Lê o ficheiro de parâmetros (SPFILE/PFILE) e aloca a memória SGA. |
-| **MOUNT** | `ALTER DATABASE MOUNT` | A instância associa-se ao banco de dados através da leitura do **Control File**. |
-| **OPEN** | `ALTER DATABASE OPEN` | Todos os ficheiros de dados e logs são abertos. O banco está disponível para os utilizadores. |
+| **NOMOUNT** | `STARTUP NOMOUNT` | Inicialização da instância através da leitura do ficheiro de parâmetros (SPFILE/PFILE). |
+| **MOUNT** | `ALTER DATABASE MOUNT` | Associação da instância ao banco de dados via leitura do **Control File**. |
+| **OPEN** | `ALTER DATABASE OPEN` | Abertura de Datafiles e Redo Logs, disponibilizando o banco para transações. |
 
-> **Dica de DBA:** Pratiquei o uso do `SHUTDOWN IMMEDIATE`, que encerra o banco de forma consistente, garantindo que não haja corrupção de dados ao terminar as transações ativas.
+> **Nota de Administração:** Aplicação do comando `SHUTDOWN IMMEDIATE` para encerramento consistente do banco, garantindo que todas as transações ativas sejam finalizadas corretamente e a integridade dos dados seja preservada.
 
-### C. Conectividade e Ferramentas de Acesso
-Configuração do **Oracle Net Services** para permitir a comunicação entre aplicações e o servidor:
-- **Listener:** Verificação do serviço que "ouve" as requisições na rede (porta 1521).
-- **TNSNames:** Mapeamento de serviços para facilitar a ligação via **SQL*Plus** e **SQL Developer**.
-
----
-
-## 📊 3. Scripts de Administração (Troubleshooting)
-Na pasta `/scripts`, disponibilizo ferramentas para monitorização rápida do ambiente:
-- `health_check.sql`: Valida o status da instância e dos PDBs.
-- `check_memory.sql`: Monitoriza a utilização da SGA.
+### 3. Conectividade e Oracle Net Services
+Configuração de camadas de rede para acesso ao banco de dados:
+- **Oracle Listener:** Configuração e monitoramento do processo que gerencia requisições de conexão.
+- **Resolução de Nomes (TNS):** Configuração do ficheiro `tnsnames.ora` para definição de serviços de conexão para instâncias CDB e PDB.
 
 ---
 
-## 🗣️ Como explico este projeto numa Entrevista?
-
-Ao ser questionado sobre este projeto, foco em três pontos:
-1. **Poder de Diagnóstico:** "Sei identificar em qual fase de inicialização a instância falhou, o que reduz o tempo de inatividade (downtime)."
-2. **Segurança de Dados:** "Entendo a importância dos ficheiros de Redo Log e Control Files para a integridade do banco."
-3. **Escalabilidade:** "Com a arquitetura Multitenant, demonstrei como consolidar vários bancos (PDBs) numa única infraestrutura (CDB)."
+## 📊 Scripts de Monitoramento e Administração
+Os scripts desenvolvidos para suporte às atividades de DBA encontram-se na pasta `/scripts`:
+- `health_check.sql`: Script para validação imediata do status da instância e dos bancos plugáveis (PDBs).
+- `manage_instance.sql`: Automação de comandos de transição de estado.
 
 ---
-## 🎓 Certificação Relacionada
+
+## 🎓 Referência de Formação
 - **Curso:** Oracle Database Explorer
-- **Trilha:** Oracle Database Administration Specialist
+- **Trilha:** Oracle Database Administration
