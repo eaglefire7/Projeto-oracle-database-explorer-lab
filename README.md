@@ -2,6 +2,7 @@
 
 Este repositório documenta a implementação prática e os procedimentos de administração realizados durante o curso **Oracle Database Explorer**. O projeto foca nos pilares de sustentação de um ambiente Oracle, abrangendo desde a arquitetura física e lógica até o gerenciamento crítico da instância.
 
+![Status do Banco de Dados](img/health_check.png)
 ---
 
 ## 🏗️ Arquitetura do Oracle Database
