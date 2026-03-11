@@ -40,7 +40,6 @@ Configuração de camadas de rede para acesso ao banco de dados:
 ## 📊 Scripts de Monitoramento e Administração
 Os scripts desenvolvidos para suporte às atividades de DBA encontram-se na pasta `/scripts`:
 - `health_check.sql`: Script para validação imediata do status da instância e dos bancos plugáveis (PDBs).
-- `manage_instance.sql`: Automação de comandos de transição de estado.
 
 ---
 
